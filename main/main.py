@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from database import Base, engine
-from routers import pacientes, profissionais, consultas
+from .database import Base, engine
+from .routers import pacientes, profissionais, consultas
 
 # Criar tabelas no PostgreSQL
 Base.metadata.create_all(bind=engine)

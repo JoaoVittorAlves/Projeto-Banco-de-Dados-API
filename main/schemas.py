@@ -1,11 +1,12 @@
 from pydantic import BaseModel
-from datetime import datetime
 from typing import Optional
+from datetime import date, time, datetime
 
 # Paciente
 class PacienteBase(BaseModel):
     nome: str
-    idade: int
+    data_nascimento: date
+    cpf: str
     telefone: str
 
 class PacienteCreate(PacienteBase):
@@ -14,12 +15,14 @@ class PacienteCreate(PacienteBase):
 class PacienteOut(PacienteBase):
     id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Profissional
 class ProfissionalBase(BaseModel):
     nome: str
     especialidade: str
+    registro: str
+    telefone: Optional[str] = None
 
 class ProfissionalCreate(ProfissionalBase):
     pass
@@ -27,13 +30,14 @@ class ProfissionalCreate(ProfissionalBase):
 class ProfissionalOut(ProfissionalBase):
     id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Consulta
 class ConsultaBase(BaseModel):
     paciente_id: int
     profissional_id: int
-    data: datetime
+    data: date
+    hora: time
 
 class ConsultaCreate(ConsultaBase):
     pass
@@ -41,4 +45,4 @@ class ConsultaCreate(ConsultaBase):
 class ConsultaOut(ConsultaBase):
     id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
